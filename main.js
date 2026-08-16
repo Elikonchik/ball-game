@@ -1,12 +1,10 @@
 'use strict';
 
-function onBallClick() {
-
-    const elBall = document.querySelector('.ball')
+function onBallClick(elBall, maxDiameter) {
 
     let newSize = +elBall.innerText + getRandomInt(20, 60)
 
-    if (newSize > 400) {
+    if (newSize > maxDiameter) {
         newSize = 100
     }
 
