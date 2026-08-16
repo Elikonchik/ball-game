@@ -4,7 +4,7 @@ function onBallClick() {
 
     const elBall = document.querySelector('.ball')
 
-    let newSize = +elBall.innerText + 50
+    let newSize = +elBall.innerText + getRandomInt(20, 60)
 
     if (newSize > 400) {
         newSize = 100
