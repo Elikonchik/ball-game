@@ -25,3 +25,11 @@ h1 {
 
     transition: 1s;
 }
+
+.ball2 {
+    background-color: blue;
+}
+
+.ball3 {
+    background-color: green;
+}
