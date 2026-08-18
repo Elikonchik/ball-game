@@ -1,5 +1,9 @@
 'use strict';
 
+let gHoverTimeout
+let gGameInterval
+let gIntervalCount = 0
+
 function onBallClick(elBall, maxDiameter) {
 
     let newSize = +elBall.innerText + getRandomInt(20, 60)
@@ -73,4 +77,34 @@ function onFifthBallClick() {
 function onSixthBallClick() {
 
     location.reload()
+}
+
+function onSixthBallEnter() {
+
+    gIntervalCount = 0
+
+    gHoverTimeout = setTimeout(() => {
+
+        gGameInterval = setInterval(() => {
+
+            onBallClick(document.querySelector('.ball'), 400)
+            onBallClick(document.querySelector('.ball2'), 300)
+            onThirdBallClick()
+            onFourthBallClick()
+
+            gIntervalCount++
+
+            if (gIntervalCount >= 10) {
+                clearInterval(gGameInterval)
+            }
+
+        }, 2000)
+
+    }, 2000)
+}
+
+function onSixthBallLeave() {
+
+    clearTimeout(gHoverTimeout)
+    clearInterval(gGameInterval)
 }
