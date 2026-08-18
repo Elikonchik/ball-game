@@ -36,3 +36,31 @@ function onThirdBallClick() {
     elBall2.style.height = tempSize
     elBall2.style.backgroundColor = tempColor
 }
+
+function onFourthBallClick() {
+
+    const elBall1 = document.querySelector('.ball1')
+    const elBall2 = document.querySelector('.ball2')
+
+    const decrease = getRandomInt(20, 60)
+
+    let newSize1 = elBall1.offsetWidth - decrease
+    let newSize2 = elBall2.offsetWidth - decrease
+
+    if (newSize1 < 100) {
+        newSize1 = 100
+    }
+
+    if (newSize2 < 100) {
+        newSize2 = 100
+    }
+
+    elBall1.style.width = newSize1 + 'px'
+    elBall1.style.height = newSize1 + 'px'
+
+    elBall2.style.width = newSize2 + 'px'
+    elBall2.style.height = newSize2 + 'px'
+
+    elBall1.innerText = newSize1
+    elBall2.innerText = newSize2
+}
