@@ -142,6 +142,8 @@ function saveState() {
     gHistory.push(state)
 
     gHistoryIdx = gHistory.length - 1
+
+    updateButtons()
 }
 
 function restoreState(state) {
@@ -168,6 +170,8 @@ function onUndo() {
     gHistoryIdx--
 
     restoreState(gHistory[gHistoryIdx])
+
+    updateButtons()
 }
 
 function onRedo() {
@@ -177,6 +181,17 @@ function onRedo() {
     gHistoryIdx++
 
     restoreState(gHistory[gHistoryIdx])
+
+    updateButtons()
 }
 
 saveState()
+
+function updateButtons() {
+
+    const elUndoBtn = document.querySelector('#undoBtn')
+    const elRedoBtn = document.querySelector('#redoBtn')
+
+    elUndoBtn.disabled = gHistoryIdx <= 0
+    elRedoBtn.disabled = gHistoryIdx >= gHistory.length - 1
+}
