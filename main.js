@@ -9,6 +9,9 @@ let gHistoryIdx = 0
 
 let gMoveCount = 0
 
+let gTimerInterval
+let gStartTime
+
 function onBallClick(elBall, maxDiameter) {
 
     let newSize = +elBall.innerText + getRandomInt(20, 60)
@@ -146,8 +149,12 @@ function saveState(isMove = true) {
     gHistoryIdx = gHistory.length - 1
 
     if (isMove) {
+
         gMoveCount++
+
         updateTitle()
+
+        startTimer()
     }
 
     updateButtons()
@@ -192,8 +199,6 @@ function onRedo() {
     updateButtons()
 }
 
-saveState(false)
-updateTitle()
 
 function updateButtons() {
 
@@ -208,3 +213,28 @@ function updateTitle() {
 
     document.title = `The Ball Game - Moves: ${gMoveCount}`
 }
+
+function startTimer() {
+
+    if (gTimerInterval) return
+
+    gStartTime = Date.now()
+
+    gTimerInterval = setInterval(() => {
+
+        const elapsed = Date.now() - gStartTime
+
+        const minutes = Math.floor(elapsed / 60000)
+        const seconds = Math.floor((elapsed % 60000) / 1000)
+
+        const formattedTime =
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0')
+
+        document.querySelector('.timer').innerText = formattedTime
+
+    }, 1000)
+}
+
+saveState(false)
+updateTitle()
