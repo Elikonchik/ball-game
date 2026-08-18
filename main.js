@@ -7,6 +7,8 @@ let gIntervalCount = 0
 let gHistory = []
 let gHistoryIdx = 0
 
+let gMoveCount = 0
+
 function onBallClick(elBall, maxDiameter) {
 
     let newSize = +elBall.innerText + getRandomInt(20, 60)
@@ -119,7 +121,7 @@ function onSixthBallLeave() {
     clearInterval(gGameInterval)
 }
 
-function saveState() {
+function saveState(isMove = true) {
 
     const balls = document.querySelectorAll('.ball')
 
@@ -142,6 +144,11 @@ function saveState() {
     gHistory.push(state)
 
     gHistoryIdx = gHistory.length - 1
+
+    if (isMove) {
+        gMoveCount++
+        updateTitle()
+    }
 
     updateButtons()
 }
@@ -185,7 +192,8 @@ function onRedo() {
     updateButtons()
 }
 
-saveState()
+saveState(false)
+updateTitle()
 
 function updateButtons() {
 
@@ -194,4 +202,9 @@ function updateButtons() {
 
     elUndoBtn.disabled = gHistoryIdx <= 0
     elRedoBtn.disabled = gHistoryIdx >= gHistory.length - 1
+}
+
+function updateTitle() {
+
+    document.title = `The Ball Game - Moves: ${gMoveCount}`
 }
