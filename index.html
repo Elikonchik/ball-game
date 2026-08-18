@@ -11,13 +11,17 @@
 <body>
     <h1>The Ball Game</h1>
 
+    <div class="controls">
+        <button id="undoBtn" onclick="onUndo()">↩️Undo</button>
+        <button id="redoBtn" onclick="onRedo()">↪️Redo</button>
+    </div>
+
     <div onclick="onBallClick(this,400)" class="ball ball1">100</div>
     <div onclick="onBallClick(this,300)" class="ball ball2">100</div>
     <div onclick="onThirdBallClick()" class="ball ball3">100</div>
     <div onclick="onFourthBallClick()" class="ball ball4">100</div>
     <div onclick="onFifthBallClick()" class="ball ball5">100</div>
-    <div onclick="onSixthBallClick()" onmouseenter="onSixthBallEnter()"
-     onmouseleave="onSixthBallLeave()"
+    <div onclick="onSixthBallClick()" onmouseenter="onSixthBallEnter()" onmouseleave="onSixthBallLeave()"
         class="ball ball6">
         100
     </div>

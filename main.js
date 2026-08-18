@@ -4,6 +4,9 @@ let gHoverTimeout
 let gGameInterval
 let gIntervalCount = 0
 
+let gHistory = []
+let gHistoryIdx = 0
+
 function onBallClick(elBall, maxDiameter) {
 
     let newSize = +elBall.innerText + getRandomInt(20, 60)
@@ -18,6 +21,8 @@ function onBallClick(elBall, maxDiameter) {
     elBall.innerText = newSize
 
     elBall.style.backgroundColor = getRandomColor()
+
+    saveState()
 }
 
 function onThirdBallClick() {
@@ -39,6 +44,8 @@ function onThirdBallClick() {
     elBall2.style.width = tempSize
     elBall2.style.height = tempSize
     elBall2.style.backgroundColor = tempColor
+
+    saveState()
 }
 
 function onFourthBallClick() {
@@ -67,11 +74,14 @@ function onFourthBallClick() {
 
     elBall1.innerText = newSize1
     elBall2.innerText = newSize2
+
+    saveState()
 }
 
 function onFifthBallClick() {
 
     document.body.style.backgroundColor = getRandomColor()
+    saveState()
 }
 
 function onSixthBallClick() {
@@ -108,3 +118,65 @@ function onSixthBallLeave() {
     clearTimeout(gHoverTimeout)
     clearInterval(gGameInterval)
 }
+
+function saveState() {
+
+    const balls = document.querySelectorAll('.ball')
+
+    const state = {
+        backgroundColor: document.body.style.backgroundColor,
+        balls: []
+    }
+
+    balls.forEach(ball => {
+
+        state.balls.push({
+            size: parseInt(ball.innerText),
+            color: ball.style.backgroundColor || getComputedStyle(ball).backgroundColor,
+            text: ball.innerText
+        })
+    })
+
+    gHistory = gHistory.slice(0, gHistoryIdx + 1)
+
+    gHistory.push(state)
+
+    gHistoryIdx = gHistory.length - 1
+}
+
+function restoreState(state) {
+
+    document.body.style.backgroundColor = state.backgroundColor
+
+    const balls = document.querySelectorAll('.ball')
+
+    balls.forEach((ball, idx) => {
+
+        const ballState = state.balls[idx]
+
+        ball.style.width = ballState.size + 'px'
+        ball.style.height = ballState.size + 'px'
+        ball.style.backgroundColor = ballState.color
+        ball.innerText = ballState.text
+    })
+}
+
+function onUndo() {
+
+    if (gHistoryIdx <= 0) return
+
+    gHistoryIdx--
+
+    restoreState(gHistory[gHistoryIdx])
+}
+
+function onRedo() {
+
+    if (gHistoryIdx >= gHistory.length - 1) return
+
+    gHistoryIdx++
+
+    restoreState(gHistory[gHistoryIdx])
+}
+
+saveState()
