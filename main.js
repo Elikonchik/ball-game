@@ -64,3 +64,8 @@ function onFourthBallClick() {
     elBall1.innerText = newSize1
     elBall2.innerText = newSize2
 }
+
+function onFifthBallClick() {
+
+    document.body.style.backgroundColor = getRandomColor()
+}
